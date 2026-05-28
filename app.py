@@ -27,7 +27,7 @@ if st.button("✨ 취향 분석 & 다음 책 추천", use_container_width=True):
 
         st.divider()
         st.subheader("🗺️ 나의 독서지도")
-        draw_book_map(books, result["connections"], result["recommendations"])
+        draw_book_map(books, result)
 
         st.divider()
         st.subheader("🎯 취향 분석 결과")
