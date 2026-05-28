@@ -4,7 +4,7 @@ import json
 import re
 
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-2.0-flash")
+model = genai.GenerativeModel("gemini-2.0-flash-lite")
 
 def analyze_and_recommend(books: list[str]) -> dict:
     prompt = f"""
