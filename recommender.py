@@ -10,21 +10,24 @@ def analyze_and_recommend(books: list[str]) -> dict:
 
     prompt = f"""책 3권: A="{b0}", B="{b1}", C="{b2}"
 
-아래 JSON만 출력. 다른 텍스트 없이.
+JSON만 출력. 다른 텍스트 없이.
 
 {{
   "analysis": {{"정서":"한 문장","서사":"한 문장","문체":"한 문장","문제의식":"한 문장"}},
   "individual": {{
-    "{b0}": [{{"title":"제목","author":"저자","reason":"추천이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}, {{"title":"제목","author":"저자","reason":"추천이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}],
-    "{b1}": [{{"title":"제목","author":"저자","reason":"추천이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}, {{"title":"제목","author":"저자","reason":"추천이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}],
-    "{b2}": [{{"title":"제목","author":"저자","reason":"추천이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}, {{"title":"제목","author":"저자","reason":"추천이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}]
+    "{b0}": [{{"title":"제목","author":"저자","reason":"이유"}},{{"title":"제목","author":"저자","reason":"이유"}}],
+    "{b1}": [{{"title":"제목","author":"저자","reason":"이유"}},{{"title":"제목","author":"저자","reason":"이유"}}],
+    "{b2}": [{{"title":"제목","author":"저자","reason":"이유"}},{{"title":"제목","author":"저자","reason":"이유"}}]
   }},
   "pairs": {{
-    "{b0}+{b1}": {{"label":"연결키워드","books":[{{"title":"제목","author":"저자","reason":"이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}},{{"title":"제목","author":"저자","reason":"이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}]}},
-    "{b1}+{b2}": {{"label":"연결키워드","books":[{{"title":"제목","author":"저자","reason":"이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}},{{"title":"제목","author":"저자","reason":"이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}]}},
-    "{b0}+{b2}": {{"label":"연결키워드","books":[{{"title":"제목","author":"저자","reason":"이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}},{{"title":"제목","author":"저자","reason":"이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}]}},
-    "{b0}+{b1}+{b2}": {{"label":"연결키워드","books":[{{"title":"제목","author":"저자","reason":"이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}},{{"title":"제목","author":"저자","reason":"이유","deeper":{{"title":"제목","author":"저자","reason":"이유"}}}}]}}
-  }}
+    "{b0}+{b1}": {{"label":"키워드","books":[{{"title":"제목","author":"저자","reason":"이유"}},{{"title":"제목","author":"저자","reason":"이유"}}]}},
+    "{b1}+{b2}": {{"label":"키워드","books":[{{"title":"제목","author":"저자","reason":"이유"}},{{"title":"제목","author":"저자","reason":"이유"}}]}},
+    "{b0}+{b2}": {{"label":"키워드","books":[{{"title":"제목","author":"저자","reason":"이유"}},{{"title":"제목","author":"저자","reason":"이유"}}]}},
+    "{b0}+{b1}+{b2}": {{"label":"키워드","books":[{{"title":"제목","author":"저자","reason":"이유"}},{{"title":"제목","author":"저자","reason":"이유"}}]}}
+  }},
+  "yellow_connections": [
+    {{"title":"두 추천책을 연결하는 책 제목","author":"저자","reason":"이유","connects":["파란노드제목1","파란노드제목2"]}}
+  ]
 }}"""
 
     message = client.messages.create(
